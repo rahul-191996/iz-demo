@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d5d9bd7a-c23f-4697-bc96-3dbe2d94c28c" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="3d961aad-c66f-45cb-8887-c15c02c89f66" >
+		<db:my-sql-connection host="db4free.net" port="3306" user="rahul1996" password="godisgreat@123" database="rahulapisero" />
+	</db:config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="3a87a245-cfc6-4afc-b667-116109c6acac" >
+		<http:request-connection host="abcd.com" port="80" />
+	</http:request-config>
+	<flow name="iz-analyzer-demoFlow" doc:id="5f9361a4-f4a1-4e78-ba90-3af426fa996a" >
+		<http:listener doc:name="Listener" doc:id="dd8d45c5-05b5-4f06-b714-ce41813dacd0" config-ref="HTTP_Listener_config" path="/abc"/>
+		<db:select doc:name="Select" doc:id="69ad83b5-02cf-4999-aef9-a41739bf72d5" config-ref="Database_Config">
+			<db:sql >select * from customer</db:sql>
+		</db:select>
+		<http:request method="GET" doc:name="Request" doc:id="250f71e9-4e0a-4f39-b595-adea740d4dfb" config-ref="HTTP_Request_configuration" path="/demo"/>
+		<batch:job jobName="iz-analyzer-demoBatch_Job" doc:id="53fc8521-a741-4c7e-910a-e4bdc81a5459" >
+			<batch:process-records >
+				<batch:step name="Batch_Step" doc:id="8f6b40fe-c09e-417e-936e-5b69672807ba" >
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="7b2ff4bf-581d-4833-9914-2b983db22518" size="500"/>
+				</batch:step>
+			</batch:process-records>
+		</batch:job>
+	</flow>
+</mule>
