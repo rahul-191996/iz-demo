@@ -24,7 +24,7 @@ http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/ba
 		<batch:job jobName="iz-analyzer-demoBatch_Job" doc:id="53fc8521-a741-4c7e-910a-e4bdc81a5459" >
 			<batch:process-records >
 				<batch:step name="Batch_Step" doc:id="8f6b40fe-c09e-417e-936e-5b69672807ba" >
-					<batch:aggregator doc:name="Batch Aggregator" doc:id="7b2ff4bf-581d-4833-9914-2b983db22518" size="500"/>
+					<batch:aggregator doc:name="Batch Aggregator" doc:id="7b2ff4bf-581d-4833-9914-2b983db22518" size="400"/>
 				</batch:step>
 			</batch:process-records>
 		</batch:job>
